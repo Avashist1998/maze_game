@@ -1,23 +1,13 @@
 import pygame
-
-from random import random
-from dataclasses import dataclass
-from typing import Final, List
+from typing import Final
 
 from src.maze_game import MazeGame, MazeGameState
 from src.maze_game_visualization import MazeGamePygameVisualization
 
 SCREEN_WIDTH: Final = 800
 SCREEN_HEIGHT: Final = 600
-MAZE_WIDTH:Final = SCREEN_WIDTH - 100
+MAZE_WIDTH: Final = SCREEN_WIDTH - 100
 MAZE_HEIGHT: Final = SCREEN_HEIGHT - 100
-
-
-TEXT_COL: Final = pygame.Color("black")
-# FONT: Final = pygame.font.SysFont("arialblack", 60)
-# SMALL_FONT: Final = pygame.font.SysFont("arialblack", 30)
-# screen: pygame.Surface = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
-
 
 if __name__ == "__main__":
 
@@ -26,7 +16,7 @@ if __name__ == "__main__":
     visualizer = MazeGamePygameVisualization(SCREEN_HEIGHT, SCREEN_WIDTH)
 
     while running:
-        if game.state == MazeGameState.MENU:    
+        if game.state == MazeGameState.MENU:
             visualizer.draw_main_menu()
 
         elif game.state == MazeGameState.PAUSED:
@@ -52,13 +42,17 @@ if __name__ == "__main__":
                     game.set_state(MazeGameState.MENU)
                 elif event.key == pygame.K_SPACE:
                     game.set_state(MazeGameState.PAUSED)
-                elif (event.key == pygame.K_UP or event.key == pygame.K_w) and game.state == MazeGameState.PLAYING:
+                elif (event.key == pygame.K_UP or event.key
+                      == pygame.K_w) and game.state == MazeGameState.PLAYING:
                     game.move_up()
-                elif (event.key == pygame.K_DOWN  or event.key == pygame.K_s) and game.state == MazeGameState.PLAYING:
+                elif (event.key == pygame.K_DOWN or event.key
+                      == pygame.K_s) and game.state == MazeGameState.PLAYING:
                     game.move_down()
-                elif (event.key == pygame.K_RIGHT or event.key == pygame.K_d) and game.state == MazeGameState.PLAYING:
+                elif (event.key == pygame.K_RIGHT or event.key
+                      == pygame.K_d) and game.state == MazeGameState.PLAYING:
                     game.move_right()
-                elif (event.key == pygame.K_LEFT or event.key == pygame.K_a) and game.state == MazeGameState.PLAYING:
+                elif (event.key == pygame.K_LEFT or event.key
+                      == pygame.K_a) and game.state == MazeGameState.PLAYING:
                     game.move_left()
 
         pygame.display.update()
