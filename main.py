@@ -24,8 +24,8 @@ if __name__ == "__main__":
     running = True
     game = MazeGame(MAZE_WIDTH, MAZE_HEIGHT)
     visualizer = MazeGamePygameVisualization(SCREEN_HEIGHT, SCREEN_WIDTH)
-    while running:
 
+    while running:
         if game.state == MazeGameState.MENU:    
             visualizer.draw_main_menu()
 
