@@ -24,6 +24,8 @@ if __name__ == "__main__":
 
         else:
             visualizer.draw_maze(game.curr_level_maze)
+            visualizer.draw_level_counter(game.curr_level_maze)
+            visualizer.draw_step_counter(game.curr_level_maze)
             if game.solved:
                 visualizer.draw_game_over()
 

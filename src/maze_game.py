@@ -121,8 +121,10 @@ def generate_board(
 
 class MazeGameLayer:
 
-    def __init__(self, maze_height: int, maze_width: int, level: int = 1):
+    level_count = 0
 
+    def __init__(self, maze_height: int, maze_width: int, level: int = 1):
+        MazeGameLayer.level_count += 1
         self.solved = False
         self.step_count = 0
         self.tile_width, self.tile_height = 200 // level, 200 // level
