@@ -99,3 +99,15 @@ class MazeGamePygameVisualization:
         pygame.draw.rect(
             self.screen, pygame.Color("black"),
             pygame.Rect(50, 50, col * tile_width, row * tile_height), 3)
+
+    def draw_level_counter(self, maze: MazeGameLayer):
+        img = self.font.render(f"Level {maze.level_count}.", True, pygame.Color("Black"))
+        text_width, text_height = img.get_width(), img.get_height()
+        self.screen.blit(img, (self.screen_width // 2 - text_width // 2,
+                               text_height // 2 - 15))
+
+    def draw_step_counter(self, maze: MazeGameLayer):
+        img = self.font.render(f"Step Counter: {maze.step_count}.", True, pygame.Color("Black"))
+        text_width, text_height = img.get_width(), img.get_height()
+        self.screen.blit(img, (self.screen_width // 2 - text_width // 2,
+                               self.screen_height - text_height // 2 - 25))
