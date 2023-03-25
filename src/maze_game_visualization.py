@@ -1,6 +1,5 @@
 import pygame
 from typing import Final
-from dataclasses import dataclass
 
 from src.tile import Tile
 from src.button import Button
