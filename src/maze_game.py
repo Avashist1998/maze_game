@@ -1,5 +1,5 @@
-from random import random, sample
 from enum import Enum
+from random import random, sample
 from typing import Tuple, List, Dict
 
 
