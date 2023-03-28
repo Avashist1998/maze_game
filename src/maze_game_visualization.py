@@ -1,14 +1,22 @@
 import pygame
 from typing import Final
 
-from src.tile import Tile
 from src.button import Button
 from src.maze_game import MazeGameLayer, MazeObject
+from src.utils import draw_text, MazeText
+from src.tile import Tile
 
 
-class MazeGamePygameVisualization:
+class MazeGameVisualization:
+    """Maze Game visualization class"""
 
     def __init__(self, screen_height: int, screen_width: int):
+        """Maze Game visualization class constructor.
+
+        Args:
+            screen_height: pixel height of user screen
+            screen_width: pixel width of the user screen
+        """
 
         pygame.init()
         pygame.display.set_caption("Maze")
@@ -20,12 +28,9 @@ class MazeGamePygameVisualization:
         self.screen: pygame.Surface = pygame.display.set_mode(
             [screen_width, screen_height])
 
-    def draw_text(self, text: str, text_col: pygame.Color, x: int, y: int):
-
-        img = self.font.render(text, True, text_col)
-        self.screen.blit(img, (x, y))
-
     def draw_main_menu(self):
+        """Draws the main menu on the screen."""
+
         exit_img = pygame.image.load("img/exitButton.png").convert_alpha()
         single_play_img = pygame.image.load(
             "img/playButton.png").convert_alpha()
@@ -37,13 +42,18 @@ class MazeGamePygameVisualization:
         twitch_play_button = Button(225, 300, twitch_play_img, 1)
 
         self.screen.fill((255, 255, 255))
-        self.draw_text("Menu Screen", self.text_color,
-                       self.screen_width // 2 - 145, 50)
+        img = self.font.render("Menu Screen", True, pygame.Color("Blue"))
+        text_width, _ = img.get_width(), img.get_height()
+
+        title_text = MazeText("Menu Screen", self.text_color, self.font,
+                              self.screen_width // 2 - text_width // 2, 50)
+        draw_text(title_text, self.screen)
         single_play_button.draw(self.screen)
         twitch_play_button.draw(self.screen)
         exit_button.draw(self.screen)
 
     def draw_game_over(self):
+        """Draws the game move message."""
 
         pygame.draw.rect(
             self.screen, pygame.Color("white"),
@@ -52,17 +62,32 @@ class MazeGamePygameVisualization:
 
         img = self.font.render("Game Over", True, pygame.Color("Blue"))
         text_width, text_height = img.get_width(), img.get_height()
-        self.screen.blit(img, (self.screen_width // 2 - text_width // 2,
-                               self.screen_height // 2 - text_height // 2))
+        game_over_text_left_x = self.screen_width // 2 - text_width // 2
+        game_over_text_text_left_y = self.screen_height // 2 - text_height // 2
+        game_over_text = MazeText("Game Over", pygame.Color("Blue"), self.font,
+                                  game_over_text_left_x,
+                                  game_over_text_text_left_y)
+        draw_text(game_over_text, self.screen)
 
-        img = self.small_font.render("Press Enter to restart", True,
-                                     pygame.Color("Blue"))
+        img = self.small_font.render("Press down arrow to start next level",
+                                     True, pygame.Color("Blue"))
         text_width, text_height = img.get_width(), img.get_height()
-        self.screen.blit(img,
-                         (self.screen_width // 2 - text_width // 2,
-                          self.screen_height // 2 - text_height // 2 + 30))
+        next_level_message_left_x = self.screen_width // 2 - text_width // 2
+        next_level_message_left_y = self.screen_height // 2 - text_height // 2 + 30
+        next_level_message = MazeText("Press down arrow to start next level",
+                                      pygame.Color("Blue"), self.small_font,
+                                      next_level_message_left_x,
+                                      next_level_message_left_y)
+        draw_text(next_level_message, self.screen)
 
     def draw_tile(self, board_x: int, board_y: int, tile: Tile):
+        """Draws the game tile on the screen.
+
+        Args:
+            board_x: top left x pixel location of the maze board.
+            board_y: top left y pixel location of the maze board.
+            tile: tile that needs to be drawn.
+        """
         x, y = tile.col * tile.width, tile.row * tile.height
         pygame.draw.rect(
             self.screen, tile.tile_color,
@@ -72,6 +97,10 @@ class MazeGamePygameVisualization:
             pygame.Rect(board_x + x, board_y + y, tile.width, tile.height), 3)
 
     def draw_maze(self, maze: MazeGameLayer):
+        """Draws the maze game board on the screen.
+        Args:
+            maze: MazeGameLayer object.
+        """
         self.screen.fill((255, 255, 255))
         tile_width, tile_height = maze.tile_width, maze.tile_height
         board = maze.get_board()
@@ -100,13 +129,16 @@ class MazeGamePygameVisualization:
             pygame.Rect(50, 50, col * tile_width, row * tile_height), 3)
 
     def draw_level_counter(self, maze: MazeGameLayer):
-        img = self.font.render(f"Level {maze.level_count}.", True, pygame.Color("Black"))
+        img = self.font.render(f"Level {maze.level_count}.", True,
+                               pygame.Color("Black"))
         text_width, text_height = img.get_width(), img.get_height()
-        self.screen.blit(img, (self.screen_width // 2 - text_width // 2,
-                               text_height // 2 - 15))
+        self.screen.blit(
+            img,
+            (self.screen_width // 2 - text_width // 2, text_height // 2 - 15))
 
     def draw_step_counter(self, maze: MazeGameLayer):
-        img = self.font.render(f"Step Counter: {maze.step_count}.", True, pygame.Color("Black"))
+        img = self.font.render(f"Step Counter: {maze.step_count}.", True,
+                               pygame.Color("Black"))
         text_width, text_height = img.get_width(), img.get_height()
         self.screen.blit(img, (self.screen_width // 2 - text_width // 2,
                                self.screen_height - text_height // 2 - 25))
