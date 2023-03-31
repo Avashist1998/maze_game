@@ -1,2 +1,0 @@
-pybuilder==0.13.9
-pygame==2.3.0
