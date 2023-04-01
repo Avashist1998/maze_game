@@ -38,9 +38,9 @@ do
 done
 
 
-# TEST_FILES=`find $BASE_PATH -name "*.py" -path "*/tests/*" -not -path "*/site-packages/*"`
-# echo "running unittest"
-# for filename in $TEST_FILES
-# do
-#     python3 -m unittest $filename
-# done
+TEST_FILES=`find $BASE_PATH -name "*.py" -path "*/tests/*" -not -path "*/site-packages/*"`
+echo "running unittest"
+for filename in $TEST_FILES
+do
+    python3 -m unittest $filename
+done

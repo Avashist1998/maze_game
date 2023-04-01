@@ -1,10 +1,13 @@
-import pygame
+"""Defines Pygame visualization of the maze"""
 from typing import Final
+import pygame
 
 from src.button import Button
-from src.maze_game import MazeGameLayer, MazeObject
+from src.maze_game import MazeGameLayer
+from src.maze_game_object import MazeGameObject
 from src.utils import draw_text, MazeText
 from src.tile import Tile
+from src.maze_game import MazeGame, MazeGameState
 
 
 class MazeGameVisualization:
@@ -88,13 +91,15 @@ class MazeGameVisualization:
             board_y: top left y pixel location of the maze board.
             tile: tile that needs to be drawn.
         """
-        x, y = tile.col * tile.width, tile.row * tile.height
+        top_left_x, top_left_y = tile.col * tile.width, tile.row * tile.height
         pygame.draw.rect(
             self.screen, tile.tile_color,
-            pygame.Rect(board_x + x, board_y + y, tile.width, tile.height), 0)
+            pygame.Rect(board_x + top_left_x, board_y + top_left_y, tile.width,
+                        tile.height), 0)
         pygame.draw.rect(
             self.screen, tile.border_color,
-            pygame.Rect(board_x + x, board_y + y, tile.width, tile.height), 3)
+            pygame.Rect(board_x + top_left_x, board_y + top_left_y, tile.width,
+                        tile.height), 3)
 
     def draw_maze(self, maze: MazeGameLayer):
         """Draws the maze game board on the screen.
@@ -110,13 +115,13 @@ class MazeGameVisualization:
             for j in range(col):
 
                 tile_border = pygame.Color("black")
-                if board[i][j] == MazeObject.WALL.value:
+                if board[i][j] == MazeGameObject.WALL.value:
                     tile_color = pygame.Color("blue")
-                elif board[i][j] == MazeObject.GOAL.value:
+                elif board[i][j] == MazeGameObject.GOAL.value:
                     tile_color = pygame.Color("red")
-                elif board[i][j] == MazeObject.VISITED_TILE.value:
+                elif board[i][j] == MazeGameObject.VISITED_TILE.value:
                     tile_color = pygame.Color("pink")
-                elif board[i][j] == MazeObject.PLAYER_TILE.value:
+                elif board[i][j] == MazeGameObject.PLAYER_TILE.value:
                     tile_color = pygame.Color("green")
                 else:
                     tile_color = pygame.Color("white")
@@ -129,6 +134,12 @@ class MazeGameVisualization:
             pygame.Rect(50, 50, col * tile_width, row * tile_height), 3)
 
     def draw_level_counter(self, maze: MazeGameLayer):
+        """Draws the level on the screen.
+
+        Args:
+            maze: MazeGameLayer Object with the level number
+
+        """
         img = self.font.render(f"Level {maze.level_count}.", True,
                                pygame.Color("Black"))
         text_width, text_height = img.get_width(), img.get_height()
@@ -137,8 +148,35 @@ class MazeGameVisualization:
             (self.screen_width // 2 - text_width // 2, text_height // 2 - 15))
 
     def draw_step_counter(self, maze: MazeGameLayer):
+        """Draws the steps on the screen.
+
+        Args:
+            maze: MazeGameLayer object with the step count
+
+        """
+
         img = self.font.render(f"Step Counter: {maze.step_count}.", True,
                                pygame.Color("Black"))
         text_width, text_height = img.get_width(), img.get_height()
         self.screen.blit(img, (self.screen_width // 2 - text_width // 2,
                                self.screen_height - text_height // 2 - 25))
+
+    def draw_game(self, game: MazeGame):
+        """Draws the game on the screen.
+
+        Args:
+            game: MazeGame object contain game state
+        """
+
+        if game.state == MazeGameState.MENU:
+            self.draw_main_menu()
+
+        elif game.state == MazeGameState.PAUSED:
+            print("we have paused the game!")
+
+        else:
+            self.draw_maze(game.curr_level_maze)
+            self.draw_level_counter(game.curr_level_maze)
+            self.draw_step_counter(game.curr_level_maze)
+            if game.solved:
+                self.draw_game_over()
