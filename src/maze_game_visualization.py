@@ -140,7 +140,7 @@ class MazeGameVisualization:
             maze: MazeGameLayer Object with the level number
 
         """
-        img = self.font.render(f"Level {maze.level_count}.", True,
+        img = self.font.render(f"Lv: {maze.level_count}", True,
                                pygame.Color("Black"))
         text_width, text_height = img.get_width(), img.get_height()
         self.screen.blit(
@@ -155,11 +155,39 @@ class MazeGameVisualization:
 
         """
 
-        img = self.font.render(f"Step Counter: {maze.step_count}.", True,
+        img = self.font.render(f"Steps: {maze.step_count}", True,
                                pygame.Color("Black"))
         text_width, text_height = img.get_width(), img.get_height()
         self.screen.blit(img, (self.screen_width // 2 - text_width // 2,
                                self.screen_height - text_height // 2 - 25))
+
+    def draw_pause_screen(self):
+        """Draws the pause screen."""
+
+        pygame.draw.rect(
+            self.screen, pygame.Color("white"),
+            pygame.Rect(self.screen_width // 2 - 350 // 2,
+                        self.screen_height // 2 - 100 // 2, 350, 100), 0, 10)
+
+        img = self.font.render("Paused", True, pygame.Color("Blue"))
+        text_width, text_height = img.get_width(), img.get_height()
+        game_over_text_left_x = self.screen_width // 2 - text_width // 2
+        game_over_text_text_left_y = self.screen_height // 2 - text_height // 2
+        game_over_text = MazeText("Paused", pygame.Color("Blue"), self.font,
+                                  game_over_text_left_x,
+                                  game_over_text_text_left_y)
+        draw_text(game_over_text, self.screen)
+
+        img = self.small_font.render("Press Spacebar to continue.", True,
+                                     pygame.Color("Blue"))
+        text_width, text_height = img.get_width(), img.get_height()
+        next_level_message_left_x = self.screen_width // 2 - text_width // 2
+        next_level_message_left_y = self.screen_height // 2 - text_height // 2 + 30
+        next_level_message = MazeText("Press Spacebar to continue.",
+                                      pygame.Color("Blue"), self.small_font,
+                                      next_level_message_left_x,
+                                      next_level_message_left_y)
+        draw_text(next_level_message, self.screen)
 
     def draw_game(self, game: MazeGame):
         """Draws the game on the screen.
@@ -172,7 +200,7 @@ class MazeGameVisualization:
             self.draw_main_menu()
 
         elif game.state == MazeGameState.PAUSED:
-            print("we have paused the game!")
+            self.draw_pause_screen()
 
         else:
             self.draw_maze(game.curr_level_maze)

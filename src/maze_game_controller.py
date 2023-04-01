@@ -14,7 +14,7 @@ class MazeGameEvent:
     event_type: str
 
 
-_logger: Final = init_logger(__name__)
+logger: Final = init_logger(__name__)
 
 
 class MazeGameController:
@@ -42,7 +42,7 @@ class MazeGameController:
 
     def processEvent(self, event: MazeGameEvent):
         """Process events user events"""
-        _logger.info(event)
+        logger.info(event)
 
         # change in settings or pause event
         if event.key_val == K_SPACE:
