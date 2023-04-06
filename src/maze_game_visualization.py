@@ -134,17 +134,17 @@ class MazeGameVisualization:
 
     def draw_game_over(self):
         """Draws the game move message."""
-
+        bg_width, bg_height = 800, 300
         pygame.draw.rect(
             self.screen, MESSAGE_BACKGROUND_COLOR,
-            pygame.Rect(self.screen_width // 2 - 500 // 2,
-                        self.screen_height // 2 - 150 // 2, 500, 150))
+            pygame.Rect(self.screen_width // 2 - bg_width // 2,
+                        self.screen_height // 2 - bg_height // 2, bg_width, bg_height))
 
         pygame.draw.rect(
             self.screen, GAME_OVER_TEXT_COLOR,
-            pygame.Rect(self.screen_width // 2 - 500 // 2,
-                        self.screen_height // 2 - 150 // 2, 500, 150),
-            int(150 * 0.1))
+            pygame.Rect(self.screen_width // 2 - bg_width // 2,
+                        self.screen_height // 2 - bg_height // 2, bg_width, bg_height),
+                        int(150 * 0.1))
 
         img = self.font.render("Game Over", True, pygame.Color("Blue"))
         text_width, text_height = img.get_width(), img.get_height()
@@ -159,7 +159,7 @@ class MazeGameVisualization:
                                      True, pygame.Color("Blue"))
         text_width, text_height = img.get_width(), img.get_height()
         next_level_message_left_x = self.screen_width // 2 - text_width // 2
-        next_level_message_left_y = self.screen_height // 2 - text_height // 2 + 30
+        next_level_message_left_y = self.screen_height // 2 - text_height // 2 + 75
         next_level_message = MazeText("Press down arrow to start next level",
                                       GAME_OVER_TEXT_COLOR, self.small_font,
                                       next_level_message_left_x,
@@ -191,9 +191,10 @@ class MazeGameVisualization:
             maze: MazeGameLayer object.
         """
 
-        tile_width, tile_height = maze.tile_width, maze.tile_height
         board = maze.get_board()
         row, col = len(board), len(board[0])
+        maze_screen_width, maze_screen_height = self.screen_width - 100, self.screen_height - 100
+        tile_width, tile_height = maze_screen_width // col, maze_screen_height // row
 
         for i in range(row):
             for j in range(col):
@@ -211,9 +212,6 @@ class MazeGameVisualization:
                 tile = Tile(tile_color,
                             TILE_BORDER_COLOR, tile_space)
                 self.draw_tile(tile)
-        # pygame.draw.rect(
-        #     self.screen, pygame.Color("black"),
-        #     pygame.Rect(50, 75, col * tile_width, row * tile_height), 3)
 
     def draw_level_counter(self, maze: MazeGameLayer):
         """Draws the level on the screen.

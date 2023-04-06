@@ -22,7 +22,6 @@ def main() -> None:
     visualizer = MazeGameVisualization(SCREEN_HEIGHT, SCREEN_WIDTH)
 
     while running:
-        visualizer.draw_game(game)
         for event in pygame.event.get():
             if event.type == QUIT:
                 running = False
@@ -31,7 +30,8 @@ def main() -> None:
                 running = controller.process_event(curr_event)
             else:
                 pass
-        pygame.display.update()
+            visualizer.draw_game(game)
+            pygame.display.update()
     pygame.quit()
 
 
