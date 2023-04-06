@@ -42,5 +42,6 @@ TEST_FILES=`find $BASE_PATH -name "*.py" -path "*/tests/*" -not -path "*/site-pa
 echo "running unittest"
 for filename in $TEST_FILES
 do
+    echo $filename
     python3 -m unittest $filename
 done

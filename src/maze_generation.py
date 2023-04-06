@@ -1,7 +1,7 @@
 """Maze generation function definition."""
 
 from typing import List, Tuple
-from random import random, sample
+from random import random, choices
 
 from src.maze_game_object import MazeGameObject
 
@@ -140,7 +140,7 @@ def generate_prim_maze(
     maze[start_pos[0] + 1][start_pos[1]] = 1
 
     while wall_list:
-        rand_wall = sample(wall_list, 1)[0]
+        rand_wall = choices(list(wall_list), k=1)[0]
         s_cell_count = get_surrounding_cell_count(rand_wall, maze)
 
         if s_cell_count < 2:

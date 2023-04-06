@@ -7,8 +7,8 @@ from src.maze_game import MazeGame
 from src.maze_game_controller import MazeGameController, MazeGameEvent
 from src.maze_game_visualization import MazeGameVisualization
 
-SCREEN_WIDTH: Final = 800
-SCREEN_HEIGHT: Final = 600
+SCREEN_WIDTH: Final = 1280
+SCREEN_HEIGHT: Final = 720
 MAZE_WIDTH: Final = SCREEN_WIDTH - 100
 MAZE_HEIGHT: Final = SCREEN_HEIGHT - 100
 
@@ -28,7 +28,7 @@ def main() -> None:
                 running = False
             elif event.type == KEYDOWN:
                 curr_event = MazeGameEvent(event.key, "Key_down")
-                controller.processEvent(curr_event)
+                running = controller.process_event(curr_event)
             else:
                 pass
         pygame.display.update()

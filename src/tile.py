@@ -3,13 +3,12 @@
 from dataclasses import dataclass
 from pygame import Color
 
+from src.utils import ScreenSize
+
 
 @dataclass
 class Tile:
     """Maze tile data object definition."""
-    row: int
-    col: int
-    width: int
-    height: int
     tile_color: Color
     border_color: Color
+    tile_space: ScreenSize

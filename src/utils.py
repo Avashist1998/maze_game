@@ -15,6 +15,15 @@ class MazeText:
     top_left_y: int
 
 
+@dataclass
+class ScreenSize:
+    """Screen size dataclass"""
+    width: int
+    height: int
+    top_left_x: int
+    top_left_y: int
+
+
 def draw_text(text: MazeText, screen: Surface):
     """Draws text on the screen.
 
