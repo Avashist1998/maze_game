@@ -27,7 +27,7 @@ class MazeGameController:
     def _process_movement_event(self, event: MazeGameEvent):
         """Process the game movement events."""
 
-        if self.game.state == MazeGameState.PLAYING:
+        if (self.game.state == MazeGameState.PLAYING) or (self.game.state == MazeGameState.PLAYING_WITH_TWITCH):
             if event.key_val == K_UP:
                 self.game.move_up()
             elif event.key_val == K_DOWN:
@@ -56,6 +56,8 @@ class MazeGameController:
         elif event.key_val == K_RETURN:
             if self.game.main_menu_layer.get_current_option() == "Play":
                 self.game.set_state(MazeGameState.PLAYING)
+            elif self.game.main_menu_layer.get_current_option() == "Twitch Mode":
+                self.game.set_state(MazeGameState.PLAYING_WITH_TWITCH)
             elif self.game.main_menu_layer.get_current_option() == "Quit":
                 return False
         return True
@@ -85,7 +87,7 @@ class MazeGameController:
         elif self.game.state == MazeGameState.PAUSED:
             return self.process_pause_event(event)
     
-        elif self.game.state == MazeGameState.PLAYING:
+        elif (self.game.state == MazeGameState.PLAYING) or (self.game.state == MazeGameState.PLAYING_WITH_TWITCH):
             if event.key_val == K_SPACE:
                 self.game.set_state(MazeGameState.PAUSED)
             elif event.key_val == K_ESCAPE:
