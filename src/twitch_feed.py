@@ -8,8 +8,8 @@ import pygame
 from pygame.event import Event
 from typing import List
 
-
 #make sure redirect URL is: http://localhost:17563
+
 APP_ID = 'APP_ID'
 APP_SECRET = 'APP_SECRET'
 USER_SCOPE = [AuthScope.CHAT_READ]
@@ -29,14 +29,13 @@ class TwitchFeed():
 
     # this will be called whenever a message in a channel was send by either the bot OR another user
     async def on_message(self, msg: ChatMessage):
-        if msg == "down":
-            pygame.event.post(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_DOWN))
+        if msg.text == "down":
             self.event_queue.append(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_DOWN))
-        elif msg == "up":
+        elif msg.text == "up":
             self.event_queue.append(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_UP))
-        elif msg == "left":
+        elif msg.text == "left":
             self.event_queue.append(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_LEFT))
-        elif msg == "right":
+        elif msg.text == "right":
             self.event_queue.append(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RIGHT))
 
         print(f'in {msg.room.name}, {msg.user.name} said: {msg.text}')
@@ -90,7 +89,9 @@ class TwitchFeed():
 
         # lets run till we press enter in the console
         try:
-            input('press ENTER to stop\n')
+            while True:
+                print("Doing the twitch thing")
+                await asyncio.sleep(2)
         finally:
             # now we can close the chat bot and the twitch api client
             chat.stop()
