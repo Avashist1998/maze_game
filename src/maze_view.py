@@ -6,7 +6,7 @@ from src.event import Event, StartGameEvent, QuitEvent, TickEvent
 from src.event_manager import EventManager
 from src.event_listener import EventListener
 from src.maze_game import MazeGame
-from src.maze_game_visualization import MazeGameVisualization
+from src.maze_visualization import MazeGameVisualization
 
 
 class MazeView(EventListener):
@@ -31,8 +31,8 @@ class MazeView(EventListener):
         if isinstance(event, StartGameEvent):
             self.initialize()
         elif isinstance(event, QuitEvent):
-            pygame.quit()
             self.is_initialized = False
+            pygame.quit()
         elif isinstance(event, TickEvent):
             self.draw()
             self.clock.tick(30)

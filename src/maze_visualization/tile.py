@@ -3,7 +3,7 @@
 from dataclasses import dataclass
 from pygame import Color
 
-from src.utils import ScreenSize
+from src.maze_visualization.utils import ScreenSize
 
 
 @dataclass

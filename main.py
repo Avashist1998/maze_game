@@ -1,8 +1,6 @@
 """Main file to start the maze game."""
 from typing import Final
-import pygame
-import asyncio
-from pygame.constants import (QUIT, KEYDOWN)
+
 from src.event_manager import EventManager
 from src.keyboard_controller import Keyboard
 from src.maze_view import MazeView
@@ -24,7 +22,7 @@ def main() -> None:
     game_model = GameEngine(event_manger, game)
     _ = MazeView(event_manger, game)
     _ = Keyboard(event_manger)
-    asyncio.run(game_model.run())
+    game_model.run()
 
 
 if __name__ == "__main__":

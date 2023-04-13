@@ -99,10 +99,11 @@ class GameEngine:
             if self.maze.state != MazeGameState.MENU:
                 self.maze.set_state(MazeGameState.MENU)
 
-    async def run(self):
+    # async def run(self):
+    def run(self):
         """Run the game engine."""
         LOGGER.info("Starting game engine")
         self.event_manager.post(StartGameEvent())
         while self.running:
             self.event_manager.post(TickEvent())
-            await asyncio.sleep(0.1)
+            # await asyncio.sleep(0.1)

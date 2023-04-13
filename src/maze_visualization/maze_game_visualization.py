@@ -5,10 +5,11 @@ import pygame
 from src.game_options_layer import GameOptionsLayer
 from src.maze_game import MazeGameLayer
 from src.maze_game_object import MazeGameObject
-from src.utils import draw_text, MazeText, ScreenSize
-from src.tile import Tile
 from src.maze_game import MazeGame, MazeGameState
-from src.game_color import (GAME_OVER_TEXT_COLOR, MESSAGE_BACKGROUND_COLOR,
+
+from src.maze_visualization.tile import Tile
+from src.maze_visualization.utils import draw_text, MazeText, ScreenSize
+from src.maze_visualization.game_color import (GAME_OVER_TEXT_COLOR, MESSAGE_BACKGROUND_COLOR,
                             PAUSE_TEXT_COLOR, TILE_BORDER_COLOR, PLAYER_COLOR,
                             PATH_COLOR, GOAL_COLOR, VISITED_COLOR, WALL_COLOR,
                             SELECTED_BACKGROUND_COLOR)
