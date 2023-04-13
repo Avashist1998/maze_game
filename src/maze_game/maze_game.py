@@ -1,16 +1,9 @@
 """Maze Game definition"""
-from enum import Enum
 from typing import List, Dict
 
-from src.maze_game_layer import MazeGameLayer
-from src.game_options_layer import GameOptionsLayer
-
-
-class MazeGameState(Enum):
-    """Enum for managing the state of the MazeGame"""
-    MENU = 0
-    PLAYING = 1
-    PAUSED = 2
+from src.maze_game.layers.maze_layer import MazeLayer
+from src.maze_game.layers.options_layer import OptionsLayer
+from src.maze_game.maze_state import MazeGameState
 
 
 class MazeGame:
@@ -24,17 +17,18 @@ class MazeGame:
         self.state = MazeGameState(0)
         self.level_stats: Dict[int, int] = {1: 0}
         self.maze_width, self.maze_height = maze_width, maze_height
-        self.curr_level_maze: MazeGameLayer = MazeGameLayer(
-            self.maze_height, self.maze_width, self.curr_level)
+        self.curr_level_maze: MazeLayer = MazeLayer(self.maze_height,
+                                                    self.maze_width,
+                                                    self.curr_level)
         self.tile_width, self.tile_height = self.curr_level_maze.tile_width, self.curr_level_maze.tile_height
 
-        self.main_menu_layer = GameOptionsLayer(
+        self.main_menu_layer = OptionsLayer(
             {
                 "Play": "PLAY",
                 "Twitch Mode": "TWITCH_MODE",
                 "Quit": "QUIT"
             }, "Play")
-        self.pause_menu_layer = GameOptionsLayer(
+        self.pause_menu_layer = OptionsLayer(
             {
                 "Resume": "RESUME",
                 "Quit": "QUIT"
@@ -52,8 +46,8 @@ class MazeGame:
         self.update_stats()
         self.solved = False
         self.curr_level += 1
-        self.curr_level_maze = MazeGameLayer(self.maze_height, self.maze_width,
-                                             self.curr_level)
+        self.curr_level_maze = MazeLayer(self.maze_height, self.maze_width,
+                                         self.curr_level)
         self.tile_width, self.tile_height = self.curr_level_maze.tile_width, self.curr_level_maze.tile_height
 
     def update_stats(self):

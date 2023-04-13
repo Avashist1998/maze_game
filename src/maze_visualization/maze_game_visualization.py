@@ -2,18 +2,18 @@
 from typing import Final, Tuple
 import pygame
 
-from src.game_options_layer import GameOptionsLayer
-from src.maze_game import MazeGameLayer
-from src.maze_game_object import MazeGameObject
-from src.maze_game import MazeGame, MazeGameState
+from src.maze_game.layers.maze_layer import MazeLayer
+from src.maze_game.layers.options_layer import OptionsLayer
+from src.maze_game import MazeGame, MazeGameState, MazeGameObject
 
 from src.maze_visualization.tile import Tile
 from src.maze_visualization.utils import draw_text, MazeText, ScreenSize
-from src.maze_visualization.game_color import (GAME_OVER_TEXT_COLOR, MESSAGE_BACKGROUND_COLOR,
-                            PAUSE_TEXT_COLOR, TILE_BORDER_COLOR, PLAYER_COLOR,
-                            PATH_COLOR, GOAL_COLOR, VISITED_COLOR, WALL_COLOR,
-                            SELECTED_BACKGROUND_COLOR)
-
+from src.maze_visualization.game_color import (GAME_OVER_TEXT_COLOR,
+                                               MESSAGE_BACKGROUND_COLOR,
+                                               TILE_BORDER_COLOR, PLAYER_COLOR,
+                                               PATH_COLOR, GOAL_COLOR,
+                                               VISITED_COLOR, WALL_COLOR,
+                                               SELECTED_BACKGROUND_COLOR)
 
 class MazeGameVisualization:
     """Maze Game visualization class"""
@@ -54,9 +54,9 @@ class MazeGameVisualization:
         """Draws the background of on the screen."""
 
         bg_img = pygame.image.load("img/background.jpg")
-        bg = pygame.transform.scale(bg_img,
-                                    (self.screen_width, self.screen_height))
-        self.screen.blit(bg, (0, 0))
+        background = pygame.transform.scale(
+            bg_img, (self.screen_width, self.screen_height))
+        self.screen.blit(background, (0, 0))
 
     def draw_option(self,
                     option_text: str,
@@ -87,7 +87,7 @@ class MazeGameVisualization:
         draw_text(option, self.screen)
 
     def draw_options(self,
-                     options: GameOptionsLayer,
+                     options: OptionsLayer,
                      options_space: ScreenSize,
                      padding: Tuple[int, int] = (50, 10)):
         """Draws the options on the screen."""
@@ -110,7 +110,7 @@ class MazeGameVisualization:
             self.draw_option(option_text, option_space,
                              option_text == options.current_option)
 
-    def draw_main_menu(self, menu_layer: GameOptionsLayer):
+    def draw_main_menu(self, menu_layer: OptionsLayer):
         """Draws the main menu on the screen."""
 
         img = self.font.render("Menu Screen", True, pygame.Color("Blue"))
@@ -128,7 +128,7 @@ class MazeGameVisualization:
 
         self.draw_options(menu_layer, menu_option_space, (250, 50))
 
-    def draw_pause_screen(self, pause_layer: GameOptionsLayer):
+    def draw_pause_screen(self, pause_layer: OptionsLayer):
         """Draws the pause menu on the screen."""
 
         img = self.font.render("Paused", True, pygame.Color("Blue"))
@@ -203,7 +203,7 @@ class MazeGameVisualization:
                             tile.tile_space.height),
                 int(tile.tile_space.width * 0.1))
 
-    def draw_maze(self, maze: MazeGameLayer):
+    def draw_maze(self, maze: MazeLayer):
         """Draws the maze game board on the screen.
         Args:
             maze: MazeGameLayer object.
@@ -232,7 +232,7 @@ class MazeGameVisualization:
                 tile = Tile(tile_color, TILE_BORDER_COLOR, tile_space)
                 self.draw_tile(tile)
 
-    def draw_level_counter(self, maze: MazeGameLayer):
+    def draw_level_counter(self, maze: MazeLayer):
         """Draws the level on the screen.
 
         Args:
@@ -244,7 +244,7 @@ class MazeGameVisualization:
         text_width, text_height = img.get_width(), img.get_height()
         self.screen.blit(img, (50 + text_width // 2, text_height // 2))
 
-    def draw_step_counter(self, maze: MazeGameLayer):
+    def draw_step_counter(self, maze: MazeLayer):
         """Draws the steps on the screen.
 
         Args:

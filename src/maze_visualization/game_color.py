@@ -1,7 +1,7 @@
 """Maze Game Colors"""
 
-from pygame import Color
 from typing import Final
+from pygame import Color
 
 # GOAL_COLOR: Final = Color(255, 215, 0)
 # PLAYER_COLOR: Final = Color(255, 0, 0)

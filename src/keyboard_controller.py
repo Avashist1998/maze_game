@@ -20,6 +20,16 @@ class Keyboard(EventListener):
         self.event_manager = event_manager
         event_manager.register_listener(self)
 
+        self.key_event_map = {
+            K_UP: MovementEvent(Direction.UP),
+            K_DOWN: MovementEvent(Direction.DOWN),
+            K_LEFT: MovementEvent(Direction.LEFT),
+            K_RIGHT: MovementEvent(Direction.RIGHT),
+            K_RETURN: SelectEvent(),
+            K_ESCAPE: EscapeEvent(),
+            K_SPACE: PauseEvent()
+        }
+
     def post_keyboard_event(self):
         """Get events from the keyboard."""
 
@@ -27,20 +37,8 @@ class Keyboard(EventListener):
             if event.type == QUIT:
                 self.event_manager.post(QuitEvent())
             if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
-                    self.event_manager.post(EscapeEvent())
-                elif event.key == K_RETURN:
-                    self.event_manager.post(SelectEvent())
-                elif event.key == K_SPACE:
-                    self.event_manager.post(PauseEvent())
-                elif event.key == K_UP:
-                    self.event_manager.post(MovementEvent(Direction.UP))
-                elif event.key == K_DOWN:
-                    self.event_manager.post(MovementEvent(Direction.DOWN))
-                elif event.key == K_LEFT:
-                    self.event_manager.post(MovementEvent(Direction.LEFT))
-                elif event.key == K_RIGHT:
-                    self.event_manager.post(MovementEvent(Direction.RIGHT))
+                if event.key in self.key_event_map:
+                    self.event_manager.post(self.key_event_map[event.key])
                 else:
                     self.event_manager.post(
                         KeyboardEvent(event.key.__name__, None))

@@ -2,8 +2,8 @@
 from typing import Dict
 
 
-class GameOptionsLayer:
-    """GAME OPTIONS LAYER CLASS"""
+class OptionsLayer:
+    """OPTIONS LAYER CLASS"""
 
     def __init__(self, options: Dict[str, str], default: str):
         """GAME OPTIONS LAYER CLASS CONSTRUCTOR"""

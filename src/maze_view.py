@@ -18,12 +18,14 @@ class MazeView(EventListener):
         Args:
             event_manager: The event manager.
             maze: The maze game.
-    
+
         """
-        self.is_initialized = False
         self.maze = maze
+        self.is_initialized = False
+        self.clock = pygame.time.Clock()
         self.event_manager = event_manager
         self.event_manager.register_listener(self)
+        self.maze_visualization = MazeGameVisualization(720, 1280)
 
     def notify(self, event: Event):
         """Receive events posted to the message queue."""
@@ -52,4 +54,3 @@ class MazeView(EventListener):
 
         self.is_initialized = True
         self.clock = pygame.time.Clock()
-        self.maze_visualization = MazeGameVisualization(720, 1280)
