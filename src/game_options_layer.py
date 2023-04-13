@@ -1,6 +1,7 @@
 """This module contains the GameOptionsLayer class."""
 from typing import Dict
 
+
 class GameOptionsLayer:
     """GAME OPTIONS LAYER CLASS"""
 
@@ -16,7 +17,7 @@ class GameOptionsLayer:
     def get_current_option(self):
         """Returns the current option"""
         return self.current_option
-    
+
     def move_up(self):
         """Moves the player one place up."""
         if self.current_option_index != 0:

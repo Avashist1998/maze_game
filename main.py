@@ -1,11 +1,14 @@
 """Main file to start the maze game."""
 from typing import Final
 import pygame
+import asyncio
 from pygame.constants import (QUIT, KEYDOWN)
+from src.event_manager import EventManager
+from src.keyboard_controller import Keyboard
+from src.maze_view import MazeView
+from src.model import GameEngine
 
 from src.maze_game import MazeGame
-from src.maze_game_controller import MazeGameController, MazeGameEvent
-from src.maze_game_visualization import MazeGameVisualization
 
 SCREEN_WIDTH: Final = 1280
 SCREEN_HEIGHT: Final = 720
@@ -16,23 +19,12 @@ MAZE_HEIGHT: Final = SCREEN_HEIGHT - 100
 def main() -> None:
     """Starts the maze games"""
 
-    running = True
+    event_manger = EventManager()
     game = MazeGame(MAZE_WIDTH, MAZE_HEIGHT)
-    controller = MazeGameController(game)
-    visualizer = MazeGameVisualization(SCREEN_HEIGHT, SCREEN_WIDTH)
-
-    while running:
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                running = False
-            elif event.type == KEYDOWN:
-                curr_event = MazeGameEvent(event.key, "Key_down")
-                running = controller.process_event(curr_event)
-            else:
-                pass
-            visualizer.draw_game(game)
-            pygame.display.update()
-    pygame.quit()
+    game_model = GameEngine(event_manger, game)
+    _ = MazeView(event_manger, game)
+    _ = Keyboard(event_manger)
+    asyncio.run(game_model.run())
 
 
 if __name__ == "__main__":

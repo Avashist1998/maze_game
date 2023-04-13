@@ -44,7 +44,6 @@ class MazeGameController:
                 self.game.main_menu_layer.move_up()
             elif event.key_val == K_DOWN:
                 self.game.main_menu_layer.move_down()
-    
 
     def process_menu_event(self, event: MazeGameEvent):
         """Process event when game in menu state."""
@@ -81,10 +80,10 @@ class MazeGameController:
         # change in settings or pause event
         if self.game.state == MazeGameState.MENU:
             return self.process_menu_event(event)
-      
+
         elif self.game.state == MazeGameState.PAUSED:
             return self.process_pause_event(event)
-    
+
         elif self.game.state == MazeGameState.PLAYING:
             if event.key_val == K_SPACE:
                 self.game.set_state(MazeGameState.PAUSED)

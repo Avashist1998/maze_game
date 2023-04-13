@@ -28,8 +28,17 @@ class MazeGame:
             self.maze_height, self.maze_width, self.curr_level)
         self.tile_width, self.tile_height = self.curr_level_maze.tile_width, self.curr_level_maze.tile_height
 
-        self.main_menu_layer = GameOptionsLayer({"Play": "PLAY", "Twitch Mode": "TWITCH_MODE", "Quit": "QUIT"}, "Play")
-        self.pause_menu_layer = GameOptionsLayer({"Resume": "RESUME", "Quit": "QUIT"}, "Resume")
+        self.main_menu_layer = GameOptionsLayer(
+            {
+                "Play": "PLAY",
+                "Twitch Mode": "TWITCH_MODE",
+                "Quit": "QUIT"
+            }, "Play")
+        self.pause_menu_layer = GameOptionsLayer(
+            {
+                "Resume": "RESUME",
+                "Quit": "QUIT"
+            }, "Resume")
 
     def get_board(self) -> List[List[int]]:
         return self.curr_level_maze.get_board()
