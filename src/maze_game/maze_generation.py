@@ -3,7 +3,7 @@
 from typing import List, Tuple
 from random import random, choices
 
-from src.maze_game_object import MazeGameObject
+from src.maze_game.maze_game_object import MazeGameObject
 
 
 def init_maze(height: int, width: int) -> List[List[int]]:

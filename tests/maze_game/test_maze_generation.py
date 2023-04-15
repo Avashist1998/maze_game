@@ -1,8 +1,8 @@
 """Testing Maze Board Generation."""
 import unittest
 
-from src.maze_game_object import MazeGameObject
-from src.maze_generation import generate_prim_maze
+from src.maze_game.maze_game_object import MazeGameObject
+from src.maze_game.maze_generation import generate_prim_maze
 
 
 class TestMazeGeneration(unittest.TestCase):

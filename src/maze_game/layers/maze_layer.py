@@ -2,11 +2,11 @@
 
 from typing import List
 
-from src.maze_generation import generate_prim_maze
+from src.maze_game.maze_generation import generate_prim_maze
 
 
-class MazeGameLayer:
-    """Maze Game Layer Definition."""
+class MazeLayer:
+    """Maze Layer Definition."""
 
     def __init__(self, maze_height: int, maze_width: int, level: int = 1):
 
