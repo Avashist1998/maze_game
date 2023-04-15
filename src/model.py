@@ -1,4 +1,5 @@
 """Defining the game engine."""
+import asyncio
 from typing import Final
 
 from src.event_manager import EventManager
@@ -7,6 +8,7 @@ from src.event import (Direction, Event, QuitEvent, StartGameEvent, TickEvent,
                        MovementEvent, SelectEvent, PauseEvent, EscapeEvent)
 from src.maze_game import MazeGame, MazeGameState
 from src.logger import init_logger
+
 
 SCREEN_WIDTH: Final = 1280
 SCREEN_HEIGHT: Final = 720
@@ -100,10 +102,20 @@ class GameEngine(EventListener):
             if self.maze.state != MazeGameState.MENU:
                 self.maze.set_state(MazeGameState.MENU)
 
-    def run(self):
+    # async def run(self):
+    #     """Run the game engine."""
+    #     LOGGER.info("Starting game engine")
+    #     self.event_manager.post(StartGameEvent())
+    #     while self.running:
+    #         self.event_manager.post(TickEvent())
+    #         await asyncio.sleep(0.1)
+    #     LOGGER.info("Stopping game engine")
+
+    async def run(self):
         """Run the game engine."""
         LOGGER.info("Starting game engine")
         self.event_manager.post(StartGameEvent())
         while self.running:
             self.event_manager.post(TickEvent())
-
+            await asyncio.sleep(0)
+        LOGGER.info("Stopping game engine")

@@ -1,9 +1,10 @@
 """Main file to start the maze game."""
+import asyncio
 from typing import Final
 
 from src.event_manager import EventManager
 from src.keyboard_controller import Keyboard
-from src.maze_view import MazeView
+from view import MazeView
 from src.model import GameEngine
 
 from src.maze_game import MazeGame
@@ -14,7 +15,7 @@ MAZE_WIDTH: Final = SCREEN_WIDTH - 100
 MAZE_HEIGHT: Final = SCREEN_HEIGHT - 100
 
 
-def main() -> None:
+async def main() -> None:
     """Starts the maze games"""
 
     event_manger = EventManager()
@@ -22,8 +23,8 @@ def main() -> None:
     game_model = GameEngine(event_manger, game)
     _ = MazeView(event_manger, game)
     _ = Keyboard(event_manger)
-    game_model.run()
+    await game_model.run()
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+asyncio.run(main())

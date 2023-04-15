@@ -13,7 +13,11 @@ env
 __pycache__
 .env
 venv
+.venv
 .ipynb_checkpoints
+
+## Pygbag
+*pygbag*
 
 # Logs
 logs
@@ -40,10 +44,8 @@ dist-ssr
 *.sln
 *.sw?
 
-
 # Added by cargo
 my-crate/target
 my-crate/Cargo.lock
 /target
 /Cargo.lock
-
