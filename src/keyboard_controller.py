@@ -1,3 +1,4 @@
+"""Handles keyboard input."""
 from pygame import event as py_event
 from pygame.constants import (K_UP, K_DOWN, K_RETURN, K_ESCAPE, K_RIGHT,
                               K_LEFT, K_SPACE, QUIT, KEYDOWN)

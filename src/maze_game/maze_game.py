@@ -10,6 +10,12 @@ class MazeGame:
     """Maze Game class."""
 
     def __init__(self, maze_width: int, maze_height: int):
+        """Constructor for the maze game.
+
+        Args:
+            maze_width: The width of the maze.
+            maze_height: The height of the maze.
+        """
 
         self.solved = False
         self.step_count = 0
@@ -35,14 +41,22 @@ class MazeGame:
             }, "Resume")
 
     def get_board(self) -> List[List[int]]:
+        """Returns the board of the current level."""
+
         return self.curr_level_maze.get_board()
 
     def set_state(self, state: MazeGameState):
-        """Sets the state of the game."""
+        """Sets the state of the game.
+
+        Args:
+            state: The state to set the game to.
+        """
 
         self.state = state
 
     def get_next_level(self):
+        """Gets the next level of the game."""
+
         self.update_stats()
         self.solved = False
         self.curr_level += 1
@@ -51,6 +65,8 @@ class MazeGame:
         self.tile_width, self.tile_height = self.curr_level_maze.tile_width, self.curr_level_maze.tile_height
 
     def update_stats(self):
+        """Updates the stats of the game."""
+
         self.level_stats[self.curr_level] = self.curr_level_maze.step_count
         self.solved = self.curr_level_maze.solved
 

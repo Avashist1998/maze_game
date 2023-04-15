@@ -9,7 +9,6 @@ from src.event import (Direction, Event, QuitEvent, StartGameEvent, TickEvent,
 from src.maze_game import MazeGame, MazeGameState
 from src.logger import init_logger
 
-
 SCREEN_WIDTH: Final = 1280
 SCREEN_HEIGHT: Final = 720
 MAZE_WIDTH: Final = SCREEN_WIDTH - 100

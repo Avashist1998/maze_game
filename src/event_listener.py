@@ -8,4 +8,3 @@ class EventListener(ABC):
     @abstractmethod
     def notify(self, event):
         """Receive an event posted to the message queue."""
-        pass

@@ -15,6 +15,7 @@ from src.maze_visualization.game_color import (GAME_OVER_TEXT_COLOR,
                                                VISITED_COLOR, WALL_COLOR,
                                                SELECTED_BACKGROUND_COLOR)
 
+
 class MazeGameVisualization:
     """Maze Game visualization class"""
 

@@ -4,9 +4,8 @@ from typing import Final
 
 from src.event_manager import EventManager
 from src.keyboard_controller import Keyboard
-from view import MazeView
+from src.view import MazeView
 from src.model import GameEngine
-
 from src.maze_game import MazeGame
 
 SCREEN_WIDTH: Final = 1280
@@ -26,5 +25,5 @@ async def main() -> None:
     await game_model.run()
 
 
-# if __name__ == "__main__":
-asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(main())
