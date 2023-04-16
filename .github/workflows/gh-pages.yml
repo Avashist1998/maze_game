@@ -32,7 +32,11 @@ jobs:
         run: |
           pygbag --build .
       - name: Upload Github pages artifact
+<<<<<<< HEAD
         users: actions/upload-pages-artifact@v1.0.8
+=======
+        uses: actions/upload-pages-artifact@v1.0.8
+>>>>>>> develop
         with:
           name: github-pages
           path: ./build/web/.
