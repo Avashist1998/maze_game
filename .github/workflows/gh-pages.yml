@@ -1,16 +1,21 @@
 name: pygame wasm github deployment
 
 on:
+  workflow_dispatch:
+    branches: ["main", "develop"]
   push:
-    branches: ["main"]
+    branches: ["main", "develop"]
 
 permissions:
-  context: read
+  contents: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+      - uses: FedericoCarboni/setup-ffmpeg@v2
+        id: ffmpeg
       - uses: actions/checkout@v3
       - name: Setup up Python 3.10
         uses: actions/setup-python@v3
@@ -20,7 +25,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install flake8 pytest
-          if [-f requirements.txt ]; then pip install -r requirements.txt fi
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Lint with flake8
         run: |
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
