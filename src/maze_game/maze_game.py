@@ -1,5 +1,6 @@
 """Maze Game definition"""
 from typing import List, Dict
+from src.event import Direction
 
 from src.maze_game.layers.maze_layer import MazeLayer
 from src.maze_game.layers.options_layer import OptionsLayer
@@ -69,6 +70,25 @@ class MazeGame:
 
         self.level_stats[self.curr_level] = self.curr_level_maze.step_count
         self.solved = self.curr_level_maze.solved
+
+    def move(self, direction: Direction):
+        """Move the player in the given direction.
+
+        Args:
+            direction: The direction to move the player.=
+        """
+
+        if direction == Direction.UP:
+            self.move_up()
+        elif direction == Direction.DOWN:
+            if self.curr_level_maze.solved:
+                self.get_next_level()
+            else:
+                self.move_down()
+        elif direction == Direction.LEFT:
+            self.move_left()
+        elif direction == Direction.RIGHT:
+            self.move_right()
 
     def move_up(self):
         """Moves the player up."""

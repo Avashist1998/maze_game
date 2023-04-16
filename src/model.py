@@ -39,17 +39,7 @@ class GameEngine(EventListener):
             direction: The direction to move the player.
         """
         if self.maze.state == MazeGameState.PLAYING:
-            if direction == Direction.UP:
-                self.maze.move_up()
-            elif direction == Direction.DOWN:
-                if self.maze.solved:
-                    self.maze.get_next_level()
-                else:
-                    self.maze.move_down()
-            elif direction == Direction.RIGHT:
-                self.maze.move_right()
-            elif direction == Direction.LEFT:
-                self.maze.move_left()
+            self.maze.move(direction)
         elif self.maze.state == MazeGameState.MENU:
             if direction == Direction.UP:
                 self.maze.main_menu_layer.move_up()
@@ -100,15 +90,6 @@ class GameEngine(EventListener):
         elif isinstance(event, EscapeEvent):
             if self.maze.state != MazeGameState.MENU:
                 self.maze.set_state(MazeGameState.MENU)
-
-    # async def run(self):
-    #     """Run the game engine."""
-    #     LOGGER.info("Starting game engine")
-    #     self.event_manager.post(StartGameEvent())
-    #     while self.running:
-    #         self.event_manager.post(TickEvent())
-    #         await asyncio.sleep(0.1)
-    #     LOGGER.info("Stopping game engine")
 
     async def run(self):
         """Run the game engine."""
