@@ -1,5 +1,7 @@
 """Maze Game definition"""
-from typing import List, Dict
+from typing import List, Dict, Tuple
+
+from src.config import Config
 from src.event import Direction
 
 from src.maze_game.layers.maze_layer import MazeLayer
@@ -10,7 +12,7 @@ from src.maze_game.maze_state import MazeGameState
 class MazeGame:
     """Maze Game class."""
 
-    def __init__(self, maze_width: int, maze_height: int):
+    def __init__(self, size: Tuple[int, int], config: Config):
         """Constructor for the maze game.
 
         Args:
@@ -23,18 +25,24 @@ class MazeGame:
         self.curr_level: int = 1
         self.state = MazeGameState(0)
         self.level_stats: Dict[int, int] = {1: 0}
-        self.maze_width, self.maze_height = maze_width, maze_height
+        self.maze_width, self.maze_height = size[0], size[1]
         self.curr_level_maze: MazeLayer = MazeLayer(self.maze_height,
                                                     self.maze_width,
                                                     self.curr_level)
         self.tile_width, self.tile_height = self.curr_level_maze.tile_width, self.curr_level_maze.tile_height
 
-        self.main_menu_layer = OptionsLayer(
-            {
-                "Play": "PLAY",
-                "Twitch Mode": "TWITCH_MODE",
-                "Quit": "QUIT"
-            }, "Play")
+        self.main_menu_layer = OptionsLayer({
+            "Play": "PLAY",
+            "Quit": "QUIT"
+        }, "Play")
+
+        if config.TWITCH_MODE:
+            self.main_menu_layer = OptionsLayer(
+                {
+                    "Play": "PLAY",
+                    "Twitch Mode": "TWITCH_MODE",
+                    "Quit": "QUIT"
+                }, "Play")
         self.pause_menu_layer = OptionsLayer(
             {
                 "Resume": "RESUME",

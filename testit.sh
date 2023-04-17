@@ -8,40 +8,16 @@ fi
 PY_FILES=`find $BASE_PATH -name "*.py" -not -path "*/site-packages/*"`
 
 echo "yapf checking"
-
-for filename in $PY_FILES
-do
-   yapf -d $filename --style ./setup.cfg
-done
-
+yapf -d $PY_FILES --style ./setup.cfg
 
 echo "mypy check"
-
-for filename in $PY_FILES
-do
-    mypy $filename --config-file ./setup.cfg
-done
-
+mypy $PY_FILES --config-file ./setup.cfg --ignore-missing-imports
 
 echo "flake8 check"
-
-for filename in $PY_FILES
-do
-    flake8 $filename --config ./setup.cfg
-done
-
+flake8 $PY_FILES --config ./setup.cfg --count --statistics
 
 echo "pylint check"
-for filename in $PY_FILES
-do
-    pylint $filename --rcfile ./setup.cfg
-done
+pylint $PY_FILES --rcfile ./setup.cfg
 
-
-TEST_FILES=`find $BASE_PATH -name "*.py" -path "*/tests/*" -not -path "*/site-packages/*"`
-echo "running unittest"
-for filename in $TEST_FILES
-do
-    echo $filename
-    python3 -m unittest $filename
-done
+echo "running pytest"
+pytest $BASE_PATH

@@ -7,3 +7,5 @@ class MazeGameState(Enum):
     MENU = 0
     PLAYING = 1
     PAUSED = 2
+    TWITCH_MODE = 3
+    GAME_OVER = 4
