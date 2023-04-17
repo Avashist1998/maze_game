@@ -275,8 +275,8 @@ class MazeGameVisualization:
             self.draw_pause_screen(game.pause_menu_layer)
 
         else:
-            self.draw_maze(game.curr_level_maze)
-            self.draw_level_counter(game.curr_level_maze)
-            self.draw_step_counter(game.curr_level_maze)
-            if game.solved:
+            self.draw_maze(game.get_maze())
+            self.draw_level_counter(game.get_maze())
+            self.draw_step_counter(game.get_maze())
+            if game.get_maze().is_solved():
                 self.draw_game_over()

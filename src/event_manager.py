@@ -1,6 +1,6 @@
 """Event manager class."""
 from typing import Set
-from src.event import Event, QuitEvent
+from src.event import Event
 from src.event_listener import EventListener
 
 

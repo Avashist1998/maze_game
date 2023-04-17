@@ -42,7 +42,8 @@ class Keyboard(EventListener):
                 if event.key in self.key_event_map:
                     self.event_manager.post(self.key_event_map[event.key])
                 else:
-                    self.event_manager.post(KeyboardEvent(py_key.name(event.key)))
+                    self.event_manager.post(
+                        KeyboardEvent(py_key.name(event.key)))
 
     def notify(self, event: Event):
         """Receive events posted to the message queue."""
