@@ -7,6 +7,7 @@ from src.keyboard_controller import Keyboard
 from src.view import MazeView
 from src.model import GameEngine
 from src.maze_game import MazeGame
+from src.config import get_config
 
 SCREEN_WIDTH: Final = 1280
 SCREEN_HEIGHT: Final = 720
@@ -16,9 +17,9 @@ MAZE_HEIGHT: Final = SCREEN_HEIGHT - 100
 
 async def main() -> None:
     """Starts the maze games"""
-
+    config = get_config()
     event_manger = EventManager()
-    game = MazeGame(MAZE_WIDTH, MAZE_HEIGHT)
+    game = MazeGame((MAZE_WIDTH, MAZE_HEIGHT), config)
     game_model = GameEngine(event_manger, game)
     _ = MazeView(event_manger, game)
     _ = Keyboard(event_manger)

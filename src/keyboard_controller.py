@@ -1,5 +1,6 @@
 """Handles keyboard input."""
 from pygame import event as py_event
+from pygame import key as py_key
 from pygame.constants import (K_UP, K_DOWN, K_RETURN, K_ESCAPE, K_RIGHT,
                               K_LEFT, K_SPACE, QUIT, KEYDOWN)
 
@@ -42,7 +43,7 @@ class Keyboard(EventListener):
                     self.event_manager.post(self.key_event_map[event.key])
                 else:
                     self.event_manager.post(
-                        KeyboardEvent(event.key.__name__, None))
+                        KeyboardEvent(py_key.name(event.key)))
 
     def notify(self, event: Event):
         """Receive events posted to the message queue."""

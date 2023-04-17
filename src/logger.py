@@ -4,6 +4,7 @@ from logging import INFO, DEBUG, getLogger, FileHandler, StreamHandler, Formatte
 
 from src.config import get_config
 
+
 def init_logger(name: str) -> Logger:
     """Initialize the module logger."""
     config = get_config()

@@ -27,8 +27,8 @@ class GameEngine(EventListener):
             event_manager: The event manager.
         """
 
-        self.running = True
         self.maze = maze
+        self.running = True
         self.event_manager = event_manager
         self.event_manager.register_listener(self)
 
@@ -55,7 +55,7 @@ class GameEngine(EventListener):
         """Process pause event."""
         if self.maze.state == MazeGameState.PAUSED:
             self.maze.set_state(MazeGameState.PLAYING)
-        else:
+        elif self.maze.state == MazeGameState.PLAYING:
             self.maze.set_state(MazeGameState.PAUSED)
 
     def select(self):

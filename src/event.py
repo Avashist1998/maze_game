@@ -3,6 +3,7 @@ from enum import Enum
 
 
 class Direction(Enum):
+    """Direction enum."""
     UP = 1
     DOWN = 2
     LEFT = 3
@@ -73,7 +74,7 @@ class MovementEvent(Event):
 
 
 class KeyboardEvent(Event):
-    """Keyboard or mouse input event."""
+    """Keyboard input event."""
 
     def __init__(self, key_char: str):
         super().__init__("Keyboard Event")
