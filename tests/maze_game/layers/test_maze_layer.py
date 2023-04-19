@@ -41,7 +41,8 @@ class TestMazeLayer(TestCase):
         self.assertEqual(maze_layer.level_count, 1)
         self.assertEqual(maze_layer.tile_width, 100 // 1)
         self.assertEqual(maze_layer.tile_height, 100 // 1)
-        self.assertEqual(maze_layer.board, exp_board)
+        self.assertTrue(isinstance(maze_layer.get_board(), list))
+        self.assertEqual(maze_layer.get_board(), exp_board.board)
 
     @mock.patch("src.maze_game.layers.maze_layer.generate_prim_maze")
     def test_maze_layer_board_movement(
@@ -74,3 +75,23 @@ class TestMazeLayer(TestCase):
         maze_layer.move_left()
         exp_location = (2, 1)
         self.assertEqual(maze_layer.board.curr_pos, exp_location)
+
+
+    @mock.patch("src.maze_game.layers.maze_layer.generate_prim_maze")
+    def test_maze_layer_solved(
+            self, mock_generate_prim_maze: mock.MagicMock):
+        """Test that maze layer is correctly generated."""
+        mock_generate_prim_maze.return_value = generate_prim_maze(5, 5)
+        maze_layer = MazeLayer(5, 5)
+
+        maze_layer.move_down()
+        maze_layer.move_down()
+        maze_layer.move_down()
+        maze_layer.move_down()
+        maze_layer.move_right()
+        maze_layer.move_right()
+        maze_layer.move_right()
+        maze_layer.move_down()
+
+        self.assertEqual(maze_layer.board.curr_pos, (4, 3))
+        self.assertTrue(maze_layer.is_solved())
