@@ -17,14 +17,16 @@ MAZE_HEIGHT: Final = SCREEN_HEIGHT - 100
 
 async def main() -> None:
     """Starts the maze games"""
+
     config = get_config()
-    event_manger = EventManager()
+    event_manager = EventManager()
     game = MazeGame((MAZE_WIDTH, MAZE_HEIGHT), config)
-    game_model = GameEngine(event_manger, game)
-    _ = MazeView(event_manger, game)
-    _ = Keyboard(event_manger)
+    game_model = GameEngine(event_manager, game)
+    _ = MazeView(event_manager, game)
+    _ = Keyboard(event_manager)
     await game_model.run()
 
 
 if __name__ == "__main__":
+
     asyncio.run(main())

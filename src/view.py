@@ -28,7 +28,11 @@ class MazeView(EventListener):
         self.maze_visualization = MazeGameVisualization(720, 1280)
 
     def notify(self, event: Event):
-        """Receive events posted to the message queue."""
+        """Receive events posted to the message queue.
+
+        Args:
+            event: The event that was posted.
+        """
 
         if isinstance(event, StartGameEvent):
             self.initialize()
