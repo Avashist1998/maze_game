@@ -40,7 +40,7 @@ jobs:
           pytest
       - name: Pygbag build
         run: |
-          pygbag --build .
+          pygbag --can_close 1 --ume_block 0 --build .
       - name: Upload Github pages artifact
         uses: actions/upload-pages-artifact@v1.0.8
         with:
