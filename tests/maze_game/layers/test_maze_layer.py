@@ -76,10 +76,8 @@ class TestMazeLayer(TestCase):
         exp_location = (2, 1)
         self.assertEqual(maze_layer.board.curr_pos, exp_location)
 
-
     @mock.patch("src.maze_game.layers.maze_layer.generate_prim_maze")
-    def test_maze_layer_solved(
-            self, mock_generate_prim_maze: mock.MagicMock):
+    def test_maze_layer_solved(self, mock_generate_prim_maze: mock.MagicMock):
         """Test that maze layer is correctly generated."""
         mock_generate_prim_maze.return_value = generate_prim_maze(5, 5)
         maze_layer = MazeLayer(5, 5)
