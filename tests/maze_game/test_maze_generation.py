@@ -32,7 +32,7 @@ class TestMazeGeneration(unittest.TestCase):
         self.assertEqual(len(generated_maze), expect_shape[0])
         self.assertEqual(len(generated_maze[0]), expect_shape[1])
 
-    def test_maze_start_and_end_position(self):
+    def test_maze_initialized_position(self):
         """Test that start and end position are correctly indicated"""
 
         maze_shape = (5, 10)
@@ -45,3 +45,28 @@ class TestMazeGeneration(unittest.TestCase):
                          MazeGameObject.GOAL.value)
         self.assertEqual(generated_maze[start_pos[0]][start_pos[1]],
                          MazeGameObject.PLAYER_TILE.value)
+
+    def test_entry_and_exit(self):
+        """Test that maze has an entry and exit"""
+
+        maze_shape = (5, 10)
+        start_pos, end_pos, generated_maze = generate_prim_maze(
+            maze_shape[0], maze_shape[1])
+
+        self.assertEqual(generated_maze[start_pos[0]][start_pos[1]],
+                         MazeGameObject.PLAYER_TILE.value)
+        self.assertEqual(generated_maze[end_pos[0]][end_pos[1]],
+                         MazeGameObject.GOAL.value)
+
+        for i in range(5):
+            self.assertEqual(generated_maze[i][0], MazeGameObject.WALL.value)
+            self.assertEqual(generated_maze[i][9], MazeGameObject.WALL.value)
+
+        for i in range(10):
+
+            if i != start_pos[1]:
+                self.assertEqual(generated_maze[0][i],
+                                 MazeGameObject.WALL.value)
+            if i != end_pos[1]:
+                self.assertEqual(generated_maze[4][i],
+                                 MazeGameObject.WALL.value)

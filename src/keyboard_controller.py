@@ -46,6 +46,10 @@ class Keyboard(EventListener):
                         KeyboardEvent(py_key.name(event.key)))
 
     def notify(self, event: Event):
-        """Receive events posted to the message queue."""
+        """Receive events posted to the message queue.
+
+        Args:
+            event: The event that was posted.
+        """
         if isinstance(event, TickEvent):
             self.post_keyboard_event()

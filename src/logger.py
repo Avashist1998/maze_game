@@ -7,6 +7,7 @@ from src.config import get_config
 
 def init_logger(name: str) -> Logger:
     """Initialize the module logger."""
+
     config = get_config()
     print(config)
     logger: Final = getLogger(name)
