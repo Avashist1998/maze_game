@@ -7,12 +7,9 @@ from src.maze_game.maze_board import MazeBoard
 from src.maze_game.maze_game_object import MazeGameObject
 
 
-def generate_prim_maze(
-        height: int, width: int
-) -> Tuple[Tuple[int, int], Tuple[int, int], List[List[int]]]:
+def generate_prim_maze(height: int, width: int) -> Tuple[Tuple[int, int], Tuple[int, int], List[List[int]]]:
     """Fixture for generating a maze."""
-    maze: List[List[int]] = [[MazeGameObject.PATH.value for _ in range(width)]
-                             for _ in range(height)]
+    maze: List[List[int]] = [[MazeGameObject.PATH.value for _ in range(width)] for _ in range(height)]
     for i in range(width):
         for j in range(height):
             if i == 0 or j == 0 or i == width - 1 or j == height - 1:
@@ -28,8 +25,7 @@ class TestMazeLayer(TestCase):
     """Test the Maze Layer Class."""
 
     @mock.patch("src.maze_game.layers.maze_layer.generate_prim_maze")
-    def test_maze_layer_board_setup(self,
-                                    mock_generate_prim_maze: mock.MagicMock):
+    def test_maze_layer_board_setup(self, mock_generate_prim_maze: mock.MagicMock):
         """Test that maze layer is correctly generated."""
         mock_generate_prim_maze.return_value = generate_prim_maze(5, 5)
         maze_layer = MazeLayer(5, 5)
@@ -45,8 +41,7 @@ class TestMazeLayer(TestCase):
         self.assertEqual(maze_layer.get_board(), exp_board.board)
 
     @mock.patch("src.maze_game.layers.maze_layer.generate_prim_maze")
-    def test_maze_layer_board_movement(
-            self, mock_generate_prim_maze: mock.MagicMock):
+    def test_maze_layer_board_movement(self, mock_generate_prim_maze: mock.MagicMock):
         """Test that maze layer is correctly generated."""
         mock_generate_prim_maze.return_value = generate_prim_maze(5, 5)
         maze_layer = MazeLayer(5, 5)
