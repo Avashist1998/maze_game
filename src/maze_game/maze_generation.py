@@ -18,10 +18,8 @@ def init_maze(height: int, width: int) -> List[List[int]]:
 
     maze = []
     for _ in range(height):
-        line = []
-        for _ in range(width):
-            line.append(-1)
-        maze.append(line)
+        maze_row = [MazeGameObject.EMPTY.value for _ in range(width)]
+        maze.append(maze_row)
     return maze
 
 
@@ -34,11 +32,11 @@ def fill_walls(maze: List[List[int]]) -> None:
 
     for i, _ in enumerate(maze):
         for j in range(len(maze[0])):
-            if maze[i][j] == -1:
+            if maze[i][j] == MazeGameObject.EMPTY.value:
                 maze[i][j] = MazeGameObject.WALL.value
 
 
-def get_star_pos(maze: List[List[int]]) -> Tuple[int, int]:
+def get_start_pos(maze: List[List[int]]) -> Tuple[int, int]:
     """Returns an appropriate start position
     Args:
         maze: 2d array representing the maze board
@@ -47,16 +45,7 @@ def get_star_pos(maze: List[List[int]]) -> Tuple[int, int]:
     """
 
     row, col = len(maze), len(maze[0])
-    start_row, start_col = int(random() * row), int(random() * col)
-
-    if start_row == 0:
-        start_row += 1
-    if start_row == row - 1:
-        start_row -= 1
-    if start_col == 0:
-        start_col += 1
-    if start_col == col - 1:
-        start_col -= 1
+    start_row, start_col = int(random() * (row - 2)) + 1, int(random() * (col - 2)) + 1
     return start_row, start_col
 
 
@@ -81,9 +70,7 @@ def get_surrounding_cell_count(cell: Tuple[int, int], maze: List[List[int]]):
     return s_cell_count
 
 
-def create_entry_exit(
-    maze: List[List[int]]
-) -> Tuple[Tuple[int, int], Tuple[int, int], List[List[int]]]:
+def create_entry_exit(maze: List[List[int]]) -> Tuple[Tuple[int, int], Tuple[int, int], List[List[int]]]:
     """create the entry and exit to the maze
 
     Args:
@@ -110,9 +97,7 @@ def create_entry_exit(
     return start_point, exit_point, maze
 
 
-def generate_prim_maze(
-        n_row: int, n_col: int
-) -> Tuple[Tuple[int, int], Tuple[int, int], List[List[int]]]:
+def generate_prim_maze(n_row: int, n_col: int) -> Tuple[Tuple[int, int], Tuple[int, int], List[List[int]]]:
     """Generates a solvable maze using the prim's algorithm
 
     Links:
@@ -127,17 +112,12 @@ def generate_prim_maze(
     """
     wall_list = set()
     maze = init_maze(n_row, n_col)
-    start_pos = get_star_pos(maze)
-    maze[start_pos[0]][start_pos[1]] = 0
+    start_pos = get_start_pos(maze)
+    maze[start_pos[0]][start_pos[1]] = MazeGameObject.PATH.value
 
-    wall_list.add((start_pos[0] - 1, start_pos[1]))
-    wall_list.add((start_pos[0], start_pos[1] - 1))
-    wall_list.add((start_pos[0], start_pos[1] + 1))
-    wall_list.add((start_pos[0] + 1, start_pos[1]))
-    maze[start_pos[0] - 1][start_pos[1]] = 1
-    maze[start_pos[0]][start_pos[1] - 1] = 1
-    maze[start_pos[0]][start_pos[1] + 1] = 1
-    maze[start_pos[0] + 1][start_pos[1]] = 1
+    for val in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+        wall_list.add((start_pos[0] + val[0], start_pos[1] + val[1]))
+        maze[start_pos[0] + val[0]][start_pos[1] + val[1]] = MazeGameObject.WALL.value
 
     while wall_list:
         rand_wall = choices(list(wall_list), k=1)[0]
@@ -146,47 +126,51 @@ def generate_prim_maze(
         if s_cell_count < 2:
             if (rand_wall[0] > 0 and rand_wall[0] + 1 < n_row):
 
-                if (maze[rand_wall[0] - 1][rand_wall[1]] == -1
-                        and maze[rand_wall[0] + 1][rand_wall[1]]
-                        == MazeGameObject.PATH.value):
-                    maze[rand_wall[0]][
-                        rand_wall[1]] = MazeGameObject.PATH.value
-                    maze[rand_wall[0] -
-                         1][rand_wall[1]] = MazeGameObject.WALL.value
+                if (maze[rand_wall[0] - 1][rand_wall[1]] == MazeGameObject.EMPTY.value
+                        and maze[rand_wall[0] + 1][rand_wall[1]] == MazeGameObject.PATH.value):
+                    maze[rand_wall[0]][rand_wall[1]] = MazeGameObject.PATH.value
+
+                    maze[rand_wall[0] - 1][rand_wall[1]] = MazeGameObject.WALL.value
+                    maze[rand_wall[0]][rand_wall[1] - 1] = MazeGameObject.WALL.value
+                    maze[rand_wall[0]][rand_wall[1] + 1] = MazeGameObject.WALL.value
+
                     wall_list.add((rand_wall[0] - 1, rand_wall[1]))
                     wall_list.add((rand_wall[0], rand_wall[1] + 1))
                     wall_list.add((rand_wall[0], rand_wall[1] - 1))
 
-                if (maze[rand_wall[0] + 1][rand_wall[1]] == -1
-                        and maze[rand_wall[0] - 1][rand_wall[1]]
-                        == MazeGameObject.PATH.value):
-                    maze[rand_wall[0]][
-                        rand_wall[1]] = MazeGameObject.PATH.value
-                    maze[rand_wall[0] +
-                         1][rand_wall[1]] = MazeGameObject.WALL.value
+                if (maze[rand_wall[0] + 1][rand_wall[1]] == MazeGameObject.EMPTY.value
+                        and maze[rand_wall[0] - 1][rand_wall[1]] == MazeGameObject.PATH.value):
+                    maze[rand_wall[0]][rand_wall[1]] = MazeGameObject.PATH.value
+
+                    maze[rand_wall[0] + 1][rand_wall[1]] = MazeGameObject.WALL.value
+                    maze[rand_wall[0]][rand_wall[1] - 1] = MazeGameObject.WALL.value
+                    maze[rand_wall[0]][rand_wall[1] + 1] = MazeGameObject.WALL.value
+
                     wall_list.add((rand_wall[0] + 1, rand_wall[1]))
                     wall_list.add((rand_wall[0], rand_wall[1] + 1))
                     wall_list.add((rand_wall[0], rand_wall[1] - 1))
 
             if (rand_wall[1] > 0 and rand_wall[1] + 1 < n_col):
-                if (maze[rand_wall[0]][rand_wall[1] - 1] == -1
-                        and maze[rand_wall[0]][rand_wall[1] + 1]
-                        == MazeGameObject.PATH.value):
-                    maze[rand_wall[0]][
-                        rand_wall[1]] = MazeGameObject.PATH.value
-                    maze[rand_wall[0]][rand_wall[1] -
-                                       1] = MazeGameObject.WALL.value
+                if (maze[rand_wall[0]][rand_wall[1] - 1] == MazeGameObject.EMPTY.value
+                        and maze[rand_wall[0]][rand_wall[1] + 1] == MazeGameObject.PATH.value):
+                    maze[rand_wall[0]][rand_wall[1]] = MazeGameObject.PATH.value
+
+                    maze[rand_wall[0]][rand_wall[1] - 1] = MazeGameObject.WALL.value
+                    maze[rand_wall[0] - 1][rand_wall[1]] = MazeGameObject.WALL.value
+                    maze[rand_wall[0] + 1][rand_wall[1]] = MazeGameObject.WALL.value
+
                     wall_list.add((rand_wall[0], rand_wall[1] - 1))
                     wall_list.add((rand_wall[0] + 1, rand_wall[1]))
                     wall_list.add((rand_wall[0] - 1, rand_wall[1]))
 
-                if (maze[rand_wall[0]][rand_wall[1] + 1] == -1
-                        and maze[rand_wall[0]][rand_wall[1] - 1]
-                        == MazeGameObject.PATH.value):
-                    maze[rand_wall[0]][
-                        rand_wall[1]] = MazeGameObject.PATH.value
-                    maze[rand_wall[0]][rand_wall[1] +
-                                       1] = MazeGameObject.WALL.value
+                if (maze[rand_wall[0]][rand_wall[1] + 1] == MazeGameObject.EMPTY.value
+                        and maze[rand_wall[0]][rand_wall[1] - 1] == MazeGameObject.PATH.value):
+                    maze[rand_wall[0]][rand_wall[1]] = MazeGameObject.PATH.value
+
+                    maze[rand_wall[0]][rand_wall[1] + 1] = MazeGameObject.WALL.value
+                    maze[rand_wall[0] - 1][rand_wall[1]] = MazeGameObject.WALL.value
+                    maze[rand_wall[0] + 1][rand_wall[1]] = MazeGameObject.WALL.value
+
                     wall_list.add((rand_wall[0], rand_wall[1] + 1))
                     wall_list.add((rand_wall[0] - 1, rand_wall[1]))
                     wall_list.add((rand_wall[0] + 1, rand_wall[1]))
