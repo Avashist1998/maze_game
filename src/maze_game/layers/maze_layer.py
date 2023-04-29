@@ -17,7 +17,8 @@ class MazeLayer:
         self.tile_width, self.tile_height = 100 // level, 100 // level
         self.tile_width_count, self.tile_height_count = maze_width // self.tile_width, maze_height // self.tile_height
 
-        start, end, board = generate_prim_maze(self.tile_height_count, self.tile_width_count)
+        start, end, board = generate_prim_maze(self.tile_height_count,
+                                               self.tile_width_count)
         self.board = MazeBoard(board, start, end, (start[0], start[1]))
 
     def get_board(self) -> List[List[int]]:
@@ -35,7 +36,8 @@ class MazeLayer:
         solved = self.board.solved
         curr_pos = self.board.curr_pos
 
-        if solved is False and curr_pos[1] != 0 and board[curr_pos[0]][curr_pos[1] - 1] != 1:
+        if solved is False and curr_pos[1] != 0 and board[curr_pos[0]][
+                curr_pos[1] - 1] != 1:
             self.step_count += 1
             board[curr_pos[0]][curr_pos[1]] = 3
             if board[curr_pos[0]][curr_pos[1] - 1] == 3:
@@ -54,7 +56,9 @@ class MazeLayer:
         solved = self.board.solved
         curr_pos = self.board.curr_pos
 
-        if solved is False and curr_pos[1] != self.tile_width_count - 1 and board[curr_pos[0]][curr_pos[1] + 1] != 1:
+        if solved is False and curr_pos[
+                1] != self.tile_width_count - 1 and board[curr_pos[0]][
+                    curr_pos[1] + 1] != 1:
             self.step_count += 1
             board[curr_pos[0]][curr_pos[1]] = 3
             if board[curr_pos[0]][curr_pos[1] + 1] == 3:
@@ -73,7 +77,8 @@ class MazeLayer:
         solved = self.board.solved
         curr_pos = self.board.curr_pos
 
-        if solved is False and curr_pos[0] != 0 and board[curr_pos[0] - 1][curr_pos[1]] != 1:
+        if solved is False and curr_pos[0] != 0 and board[curr_pos[0] -
+                                                          1][curr_pos[1]] != 1:
             self.step_count += 1
             board[curr_pos[0]][curr_pos[1]] = 3
             if board[curr_pos[0] - 1][curr_pos[1]] == 3:
@@ -91,7 +96,9 @@ class MazeLayer:
         solved = self.board.solved
         curr_pos = self.board.curr_pos
 
-        if solved is False and curr_pos[0] != self.tile_height_count - 1 and board[curr_pos[0] + 1][curr_pos[1]] != 1:
+        if solved is False and curr_pos[
+                0] != self.tile_height_count - 1 and board[curr_pos[0] + 1][
+                    curr_pos[1]] != 1:
             self.step_count += 1
             board[curr_pos[0]][curr_pos[1]] = 3
             if board[curr_pos[0] + 1][curr_pos[1]] == 3:

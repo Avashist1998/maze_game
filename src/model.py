@@ -4,8 +4,8 @@ from typing import Final
 
 from src.event_manager import EventManager
 from src.event_listener import EventListener
-from src.event import (Direction, Event, QuitEvent, StartGameEvent, TickEvent, MovementEvent, SelectEvent, PauseEvent,
-                       EscapeEvent)
+from src.event import (Direction, Event, QuitEvent, StartGameEvent, TickEvent,
+                       MovementEvent, SelectEvent, PauseEvent, EscapeEvent)
 from src.maze_game import MazeGame, MazeGameState
 from src.logger import init_logger
 
