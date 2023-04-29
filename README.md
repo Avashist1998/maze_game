@@ -2,7 +2,7 @@
 
 The repository follows the creation of a maze game using the pygame library.
 
-Checkout the Game [here](https://avashist1998.github.io/maze-game/)
+Checkout the Game [here](https://avashist1998.github.io/maze_game/)
 
 ---
 
