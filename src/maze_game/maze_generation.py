@@ -117,7 +117,7 @@ def generate_prim_maze(n_row: int, n_col: int) -> Tuple[Tuple[int, int], Tuple[i
 
     for val in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
         wall_list.add((start_pos[0] + val[0], start_pos[1] + val[1]))
-        maze[start_pos[0] + val[0]][start_pos[1] + val[1]] = MazeGameObject.PATH.value
+        maze[start_pos[0] + val[0]][start_pos[1] + val[1]] = MazeGameObject.WALL.value
 
     while wall_list:
         rand_wall = choices(list(wall_list), k=1)[0]
