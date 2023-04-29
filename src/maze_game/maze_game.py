@@ -24,7 +24,8 @@ class MazeGame:
         self.state = MazeGameState(0)
         self.level_stats: Dict[int, int] = {1: 0}
         self.size = size
-        self.curr_maze: MazeLayer = MazeLayer(self.size[1], self.size[0], self.curr_level)
+        self.curr_maze: MazeLayer = MazeLayer(self.size[1], self.size[0],
+                                              self.curr_level)
 
         menu_options = {
             "Play": "PLAY",
@@ -35,7 +36,11 @@ class MazeGame:
             "Quit": "QUIT"
         }
         self.main_menu_layer = OptionsLayer(menu_options, "Play")
-        self.pause_menu_layer = OptionsLayer({"Resume": "RESUME", "Quit": "QUIT"}, "Resume")
+        self.pause_menu_layer = OptionsLayer(
+            {
+                "Resume": "RESUME",
+                "Quit": "QUIT"
+            }, "Resume")
 
     def get_board(self) -> List[List[int]]:
         """Returns the board of the current level."""
